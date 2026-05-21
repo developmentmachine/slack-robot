@@ -1,0 +1,29 @@
+# ==============================================================================
+# Cursor Cloud Agent & Slack Integration Rules
+# ==============================================================================
+
+# 1. 项目基本上下文 (根据你的项目实际情况修改)
+- Tech Stack: Node.js (v20), TypeScript, Next.js, TailwindCSS
+- Primary Database: PostgreSQL (Prisma ORM)
+- Package Manager: npm
+- Test Command: npm run test
+
+# 2. Slack 智能体专用行为准则 (Slack Agent Specifics)
+- **上下文优先级**：当从 Slack 线程（Thread）被唤醒时，优先分析 Slack 消息中贴出的错误日志（Error Logs）、堆栈信息（Stack Trace）或用户描述。
+- **任务聚焦**：严格围绕 Slack 指派的 Issue 进行修改，禁止越权修改或重构与当前 Bug/Feature 无关的文件。
+- **自主纠错**：代码修改完成后，必须在云端 VM 自动运行测试命令（如 `npm run test`）。如果测试失败，请阅读报错信息并进行至少 3 次自我修正，直到测试通过。
+- **依赖控制**：尽量使用项目现有的依赖库。如果必须引入新的 npm/pip 包，必须在提 PR 时明确说明理由。
+
+# 3. 代码风格与规范 (Coding Standards)
+- **TypeScript**: 严格开启 strict 模式，禁止使用 `any`，必须定义明确的 Interface 或 Type。
+- **错误处理**: 所有的异步操作（Async/Await）必须包裹 try-catch，并在 catch 块中记录有意义的上下文日志，方便团队在 Slack 报错时排查。
+- **注释要求**: 只在逻辑极其复杂的算法或绕过特定 Bug 的地方写注释，解释“为什么这么做”，而不是“做了什么”。
+
+# 4. Git 与 Pull Request 规范 (Crucial for Slack Workflow)
+- **分支命名**：从 main 分支检出，命名格式为 `cursor/fix-[简短描述]` 或 `cursor/feat-[简短描述]`。
+- **Commit Message**：遵循 Conventional Commits 规范，例如 `fix(auth): resolve token expiration 500 error`。
+- **PR 描述生成**：由于你的 PR 链接会被丢回 Slack 供人类 Review，生成的 PR Description 必须包含以下结构：
+  - **Summary**: 用一句话概括你做了什么改动。
+  - **Root Cause**: 简述导致这个 Bug 的根本原因。
+  - **Changes**: 列出主要修改的文件和逻辑。
+  - **Test Result**: 确认测试命令的运行结果。
