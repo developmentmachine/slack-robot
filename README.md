@@ -15,3 +15,7 @@ Ensure the following credentials are securely managed (never committed):
 - `SLACK_BOT_TOKEN` (xoxb-...)
 - `SLACK_SIGNING_SECRET`
 - `SLACK_APP_TOKEN` (xapp-..., if using Socket Mode)
+
+## Tencent Docs MCP (Cloud Agents)
+
+This repo includes [Tencent Docs MCP](https://docs.qq.com/openapi/mcp) via `.cursor/mcp.json`. Add `TENCENT_DOCS_TOKEN` in [Cloud Agents Secrets](https://cursor.com/dashboard/cloud-agents) — do not commit the token. See [docs/tencent-docs-mcp.md](docs/tencent-docs-mcp.md) for setup and troubleshooting.
